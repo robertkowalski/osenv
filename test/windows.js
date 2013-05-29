@@ -53,13 +53,8 @@ tap.test('basic windows sanity test', function (t) {
   process.env.TEMP = ''
   delete require.cache[require.resolve('../osenv.js')]
   var osenv = require('../osenv.js')
-  t.equal(osenv.tmpdir(), 'C:\\Users\\sirUser\\temp')
-
-  process.env.TEMP = ''
-  delete require.cache[require.resolve('../osenv.js')]
-  var osenv = require('../osenv.js')
   osenv.home = function () { return null }
-  t.equal(osenv.tmpdir(), 'C:\\windows\\temp')
+  t.equal(osenv.tmpdir(), 'c:\\windows\\temp')
 
   t.equal(osenv.editor(), 'edit')
   process.env.EDITOR = ''

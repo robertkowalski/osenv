@@ -48,10 +48,6 @@ tap.test('basic unix sanity test', function (t) {
   process.env.TEMP = ''
   delete require.cache[require.resolve('../osenv.js')]
   var osenv = require('../osenv.js')
-  t.equal(osenv.tmpdir(), '/home/sirUser/tmp')
-
-  delete require.cache[require.resolve('../osenv.js')]
-  var osenv = require('../osenv.js')
   osenv.home = function () { return null }
   t.equal(osenv.tmpdir(), '/tmp')
 
