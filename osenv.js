@@ -47,7 +47,18 @@ memo('hostname', function () {
 }, 'hostname')
 
 memo('tmpdir', function () {
-  return os.tmpdir()
+  if (os.tmpdir)
+    return os.tmpdir()
+
+  // old node versions
+  var t = isWindows ? 'temp' : 'tmp'
+  return process.env.TMPDIR ||
+         process.env.TMP ||
+         process.env.TEMP ||
+         ( exports.home() ? path.resolve(exports.home(), t)
+         : isWindows ? path.resolve(windir, t)
+         : '/tmp'
+         )
 })
 
 memo('home', function () {

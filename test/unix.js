@@ -9,6 +9,7 @@ if (process.platform === 'win32') {
   return
 }
 var tap = require('tap')
+var os = require('os')
 
 // like unix, but funny
 process.env.USER = 'sirUser'
@@ -22,7 +23,6 @@ process.env.PS1 = '(o_o) $ '
 process.env.EDITOR = 'edit'
 process.env.VISUAL = 'visualedit'
 process.env.SHELL = 'zsh'
-
 
 tap.test('basic unix sanity test', function (t) {
   var osenv = require('../osenv.js')
@@ -44,6 +44,14 @@ tap.test('basic unix sanity test', function (t) {
   delete require.cache[require.resolve('../osenv.js')]
   var osenv = require('../osenv.js')
   t.equal(osenv.tmpdir(), process.env.TEMP)
+
+  // switch for old node versions
+  if (!os.tmpdir) {
+    process.env.TEMP = ''
+    delete require.cache[require.resolve('../osenv.js')]
+    var osenv = require('../osenv.js')
+    t.equal(osenv.tmpdir(), '/home/sirUser/tmp')
+  }
 
   process.env.TEMP = ''
   delete require.cache[require.resolve('../osenv.js')]
