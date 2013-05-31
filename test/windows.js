@@ -11,6 +11,7 @@ if (process.platform !== 'win32') {
 
 // load this before clubbing the platform name.
 var tap = require('tap')
+var os = require('os')
 
 process.env.windir = 'c:\\windows'
 process.env.USERDOMAIN = 'some-domain'
